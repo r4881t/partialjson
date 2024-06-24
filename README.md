@@ -3,6 +3,12 @@
 [![Partialjson](https://github.com/iw4p/partialjson/raw/main/images/partialjson.png
 )](https://pypi.org/project/partialjson/)
 
+This library is meant to parse any kind of JSON response coming from various LLMs.
+This includes
+- Partial JSONs
+- JSONs with markdown
+- JSONs with \n between elements.
+
 ## Parse Partial and incomplete JSON in python
 
 ![](https://github.com/iw4p/partialjson/raw/main/images/partialjson.gif)
@@ -22,6 +28,14 @@ parser = JSONParser()
 incomplete_json = '{"name": "John", "age": 30, "is_student": false, "courses": ["Math", "Science"'
 print(parser.parse(incomplete_json))
 # {'name': 'John', 'age': 30, 'is_student': False, 'courses': ['Math', 'Science']}
+
+
+llm_json = '{\n  "response": "Here are the top gainers in the last 24 hours:",\n  "coins": [\n    "GLEECUSDT",\n    "PACUSDT",\n    "PLUUSDT",\n    "DADDYUSDT",\n    "LMWRUSDT",\n    "COMAIUSDT",\n    "CDTBTC",\n    "CSWAPUSDT",\n    "WQUILETH"\n  ],\n  "tweets": [],\n  "casts": [],\n  "nfts": [],\n  "news": []\n}'
+print(parser.parse(llm_json))
+# {"response": "Here are the top gainers in the last 24 hours:", "coins": ["GLEECUSDT", "PACUSDT", "PLUUSDT", "DADDYUSDT", "LMWRUSDT", "COMAIUSDT", "CDTBTC", "CSWAPUSDT", "WQUILETH"], "tweets": [], "casts": [], "nfts": [], "news": []}
+
+another_json = ''```json{\n  "response": "Here are the top gainers in the last 24 hours:",\n  "coins": [\n    "GLEECUSDT",\n    "PACUSDT",\n    "PLUUSDT",\n    "DADDYUSDT",\n    "LMWRUSDT",\n    "COMAIUSDT",\n    "CDTBTC",\n    "CSWAPUSDT",\n    "WQUILETH"\n  ],\n  "tweets": [],\n  "casts": [],\n  "nfts": [],\n  "news": []\n}\n''
+# {"response": "Here are the top gainers in the last 24 hours:", "coins": ["GLEECUSDT", "PACUSDT", "PLUUSDT", "DADDYUSDT", "LMWRUSDT", "COMAIUSDT", "CDTBTC", "CSWAPUSDT", "WQUILETH"], "tweets": [], "casts": [], "nfts": [], "news": []}
 ```
 
 ### Installation
